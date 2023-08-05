@@ -10,7 +10,7 @@ class DistortedPolygon extends StatelessWidget {
     super.key,
     this.maxCornersOffset = 20,
     this.strokeWidth = 2,
-    this.minSquareSideFraction = 2,
+    this.minSquareSideFraction = 0.5,
     this.child,
     this.color = Colors.black,
   });
@@ -24,8 +24,6 @@ class DistortedPolygon extends StatelessWidget {
   static final Random random = Random();
 
   Polygon _createPolygon(context, maxSideLength) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     Offset topLeft = Offset.zero;
     Offset topRight = topLeft + Offset(maxSideLength, 0);
     Offset bottomRight = topLeft + Offset(maxSideLength, maxSideLength);
@@ -48,12 +46,18 @@ class DistortedPolygon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return CustomPaint(
-      painter: DistortedPolygonCustomPainter(
-        polygon: _createPolygon(context, size.shortestSide * minSquareSideFraction),
-        strokeWidth: strokeWidth,
+    return ColoredBox(
+      color: Colors.white,
+      child: SizedBox.expand(
+        child: CustomPaint(
+          painter: DistortedPolygonCustomPainter(
+            polygon: _createPolygon(
+                context, size.shortestSide * minSquareSideFraction),
+            strokeWidth: strokeWidth,
+          ),
+          child: child,
+        ),
       ),
-      child: child,
     );
   }
 }
@@ -75,9 +79,10 @@ class DistortedPolygonCustomPainter extends CustomPainter {
       ..strokeWidth = strokeWidth;
 
     final center = Offset(size.width / 2, size.height / 2);
-    
+
     canvas.save();
-    canvas.translate(center.dx - polygon.center.dx, center.dy - polygon.center.dy);
+    canvas.translate(
+        center.dx - polygon.center.dx, center.dy - polygon.center.dy);
     canvas.drawPoints(
       PointMode.polygon,
       polygon.points,

@@ -14,12 +14,15 @@ class SquaresGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: CustomPaint(
-        painter: SquaresCustomPainter(
-          sideLength: sideLength,
-          strokeWidth: strokeWidth,
-          gap: gap,
+    return ColoredBox(
+      color: Colors.white,
+      child: SizedBox.expand(
+        child: CustomPaint(
+          painter: SquaresCustomPainter(
+            sideLength: sideLength,
+            strokeWidth: strokeWidth,
+            gap: gap,
+          ),
         ),
       ),
     );

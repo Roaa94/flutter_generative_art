@@ -5,9 +5,12 @@ class Square extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: CustomPaint(
-        painter: SquareCustomPainter(),
+    return ColoredBox(
+      color: Colors.white,
+      child: SizedBox.expand(
+        child: CustomPaint(
+          painter: SquareCustomPainter(),
+        ),
       ),
     );
   }
@@ -25,14 +28,14 @@ class SquareCustomPainter extends CustomPainter {
     final side = size.shortestSide * 0.8;
 
     // fromCenter(/*...*/)
-    // canvas.drawRect(
-    //   Rect.fromCenter(
-    //     center: center,
-    //     width: side,
-    //     height: side,
-    //   ),
-    //   paint,
-    // );
+    canvas.drawRect(
+      Rect.fromCenter(
+        center: center,
+        width: side,
+        height: side,
+      ),
+      paint,
+    );
 
     // fromCircle(/*...*/)
     // canvas.drawRect(
@@ -44,16 +47,16 @@ class SquareCustomPainter extends CustomPainter {
     // );
 
     // fromPoints(/*...*/)
-    canvas.save();
+    // canvas.save();
     // canvas.translate(center.dx, center.dy);
-    canvas.drawRect(
-      Rect.fromPoints(
-        Offset(-side / 2, -side / 2),
-        Offset(side / 2, side / 2),
-      ),
-      paint,
-    );
-    canvas.restore();
+    // canvas.drawRect(
+    //   Rect.fromPoints(
+    //     Offset(-side / 2, -side / 2),
+    //     Offset(side / 2, side / 2),
+    //   ),
+    //   paint,
+    // );
+    // canvas.restore();
 
     // fromLTRB(/*...*/)
     // canvas.save();

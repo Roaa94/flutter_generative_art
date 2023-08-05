@@ -24,16 +24,19 @@ class RecursiveSquaresGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: CustomPaint(
-        painter: RecursiveSquaresCustomPainter(
-          sideLength: side,
-          strokeWidth: strokeWidth,
-          gap: gap,
-          saturation: saturation,
-          lightness: lightness,
-          enableColors: enableColors,
-          minSquareSideFraction: minSquareSideFraction,
+    return ColoredBox(
+      color: Colors.white,
+      child: SizedBox.expand(
+        child: CustomPaint(
+          painter: RecursiveSquaresCustomPainter(
+            sideLength: side,
+            strokeWidth: strokeWidth,
+            gap: gap,
+            saturation: saturation,
+            lightness: lightness,
+            enableColors: enableColors,
+            minSquareSideFraction: minSquareSideFraction,
+          ),
         ),
       ),
     );
