@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_generative_art/vera_molnar/animated_distorted_polygon_set.dart';
 import 'package:flutter_generative_art/vera_molnar/get_started_page.dart';
 import 'package:flutter_generative_art/styles/themes.dart';
-import 'package:flutter_generative_art/vera_molnar/animated_distorted_squares_grid.dart';
+import 'package:flutter_generative_art/vera_molnar/animated_distorted_polygons_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygons_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygon.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygon_set.dart';
@@ -358,8 +358,11 @@ class WidgetbookApp extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
                           child: AnimatedDistortedPolygonsGrid(
-                            enableColors: true,
                             enableAnimation: true,
+                            enableColors: context.knobs.boolean(
+                              label: 'Enable Colors',
+                              initialValue: true,
+                            ),
                             oneColorPerSet: context.knobs.boolean(
                               label: 'One Color Per Set',
                               initialValue: false,

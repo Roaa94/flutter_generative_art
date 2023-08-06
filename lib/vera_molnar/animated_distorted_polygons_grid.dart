@@ -78,7 +78,7 @@ class _AnimatedDistortedPolygonsGridState
                   .floor();
 
               return CustomPaint(
-                painter: PolygonsCustomPainter(
+                painter: _PolygonsCustomPainter(
                   animationController: animationController,
                   maxSideLength: widget.maxSideLength,
                   maxCornersOffset: widget.maxCornersOffset,
@@ -104,8 +104,8 @@ class _AnimatedDistortedPolygonsGridState
   }
 }
 
-class PolygonsCustomPainter extends CustomPainter {
-  PolygonsCustomPainter({
+class _PolygonsCustomPainter extends CustomPainter {
+  _PolygonsCustomPainter({
     required AnimationController animationController,
     this.maxSideLength = 80,
     this.strokeWidth = 2,
