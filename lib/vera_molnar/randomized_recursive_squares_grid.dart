@@ -2,25 +2,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class RecursiveSquaresGrid extends StatelessWidget {
-  const RecursiveSquaresGrid({
+class RandomizedRecursiveSquaresGrid extends StatelessWidget {
+  const RandomizedRecursiveSquaresGrid({
     super.key,
     this.side = 80,
     this.strokeWidth = 2,
     this.gap = 5,
     this.minSquareSideFraction = 0.2,
-    this.saturation = 0.7,
-    this.lightness = 0.5,
-    this.enableColors = true,
   });
 
   final double side;
   final double strokeWidth;
   final double gap;
-  final double saturation;
-  final double lightness;
   final double minSquareSideFraction;
-  final bool enableColors;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +26,6 @@ class RecursiveSquaresGrid extends StatelessWidget {
             sideLength: side,
             strokeWidth: strokeWidth,
             gap: gap,
-            saturation: saturation,
-            lightness: lightness,
-            enableColors: enableColors,
             minSquareSideFraction: minSquareSideFraction,
           ),
         ),
@@ -48,9 +39,6 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
     this.sideLength = 80,
     this.strokeWidth = 2,
     this.gap = 10,
-    this.saturation = 0.7,
-    this.lightness = 0.5,
-    this.enableColors = true,
     this.minSquareSideFraction = 0.2,
   }) : minSideLength = sideLength * minSquareSideFraction;
 
@@ -58,10 +46,7 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
   final double strokeWidth;
   final double gap;
   final double minSideLength;
-  final double saturation;
-  final double lightness;
   final double minSquareSideFraction;
-  final bool enableColors;
 
   static final Random random = Random();
 
@@ -92,7 +77,7 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
       int i = index ~/ yCount;
       int j = index % yCount;
 
-      drawNestedSquares2(
+      drawNestedSquares(
         canvas,
         Offset(
           (i * (sideLength + gap)),
@@ -106,46 +91,7 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
     canvas.restore();
   }
 
-  void drawNestedSquares1(
-    Canvas canvas,
-    Offset start,
-    double sideLength,
-    Paint paint,
-  ) {
-    if (sideLength < minSideLength) return;
-
-    if (enableColors) {
-      paint.color = HSLColor.fromAHSL(
-        1,
-        random.nextInt(360).toDouble(),
-        saturation,
-        lightness,
-      ).toColor();
-    }
-
-    canvas.drawRect(
-      Rect.fromLTWH(
-        start.dx,
-        start.dy,
-        sideLength,
-        sideLength,
-      ),
-      paint,
-    );
-
-    // calculate the side length for the next square randomly
-    final nextSideLength = sideLength * (random.nextDouble() * 0.5 + 0.5);
-
-    final nextStart = Offset(
-      start.dx + sideLength / 2 - nextSideLength / 2,
-      start.dy + sideLength / 2 - nextSideLength / 2,
-    );
-
-    // recursive call with the next side length and starting point
-    drawNestedSquares1(canvas, nextStart, nextSideLength, paint);
-  }
-
-  void drawNestedSquares2(
+  void drawNestedSquares(
     Canvas canvas,
     Offset start,
     double sideLength,
@@ -154,15 +100,6 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
   ) {
     if (sideLength < minSideLength || depth <= 0) return;
 
-    if (enableColors) {
-      paint.color = HSLColor.fromAHSL(
-        1,
-        random.nextInt(360).toDouble(),
-        saturation,
-        lightness,
-      ).toColor();
-    }
-
     canvas.drawRect(
       Rect.fromLTWH(
         start.dx,
@@ -182,7 +119,7 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
     );
 
     // recursive call with the next side length and starting point
-    drawNestedSquares2(canvas, nextStart, nextSideLength, paint, depth - 1);
+    drawNestedSquares(canvas, nextStart, nextSideLength, paint, depth - 1);
   }
 
   @override

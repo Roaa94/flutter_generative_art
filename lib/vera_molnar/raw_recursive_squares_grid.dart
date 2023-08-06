@@ -20,9 +20,10 @@ class RawRecursiveSquaresGrid extends StatelessWidget {
       color: Colors.white,
       child: SizedBox.expand(
         child: CustomPaint(
-          painter: RecursiveSquaresCustomPainter(
+          painter: _RecursiveSquaresCustomPainter(
             sideLength: side,
             strokeWidth: strokeWidth,
+            minSquareSideFraction: minSquareSideFraction,
             gap: gap,
           ),
         ),
@@ -31,8 +32,8 @@ class RawRecursiveSquaresGrid extends StatelessWidget {
   }
 }
 
-class RecursiveSquaresCustomPainter extends CustomPainter {
-  RecursiveSquaresCustomPainter({
+class _RecursiveSquaresCustomPainter extends CustomPainter {
+  _RecursiveSquaresCustomPainter({
     this.sideLength = 80,
     this.strokeWidth = 2,
     this.gap = 10,

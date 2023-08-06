@@ -5,6 +5,7 @@ import 'package:flutter_generative_art/vera_molnar/animated_distorted_squares_gr
 import 'package:flutter_generative_art/vera_molnar/distorted_polygons_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygon.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygon_set.dart';
+import 'package:flutter_generative_art/vera_molnar/randomized_recursive_squares_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/raw_recursive_squares_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/recursive_squares_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/square.dart';
@@ -77,7 +78,45 @@ class WidgetbookApp extends StatelessWidget {
                         return SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
-                          child: const RawRecursiveSquaresGrid(),
+                          child: RawRecursiveSquaresGrid(
+                            strokeWidth: context.knobs.double.slider(
+                              label: 'Stroke Width',
+                              initialValue: 1.5,
+                              min: 0.5,
+                              max: 3.5,
+                              divisions: 6,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    WidgetbookUseCase(
+                      name: 'Randomized',
+                      builder: (context) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: RandomizedRecursiveSquaresGrid(
+                            side: context.knobs.double.slider(
+                              label: 'Square Side Length',
+                              initialValue: 80,
+                              min: 30,
+                              max: 200,
+                            ),
+                            gap: context.knobs.double.slider(
+                              label: 'Gap',
+                              initialValue: 5,
+                              min: 5,
+                              max: 50,
+                            ),
+                            strokeWidth: context.knobs.double.slider(
+                              label: 'Stroke Width',
+                              initialValue: 1.5,
+                              min: 0.5,
+                              max: 3.5,
+                              divisions: 6,
+                            ),
+                          ),
                         );
                       },
                     ),
