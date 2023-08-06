@@ -5,6 +5,7 @@ import 'package:flutter_generative_art/vera_molnar/animated_distorted_squares_gr
 import 'package:flutter_generative_art/vera_molnar/distorted_polygons_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygon.dart';
 import 'package:flutter_generative_art/vera_molnar/distorted_polygon_set.dart';
+import 'package:flutter_generative_art/vera_molnar/raw_recursive_squares_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/recursive_squares_grid.dart';
 import 'package:flutter_generative_art/vera_molnar/square.dart';
 import 'package:flutter_generative_art/vera_molnar/squares_grid.dart';
@@ -70,6 +71,16 @@ class WidgetbookApp extends StatelessWidget {
                 WidgetbookComponent(
                   name: 'RecursiveSquaresGrid',
                   useCases: [
+                    WidgetbookUseCase(
+                      name: 'Raw',
+                      builder: (context) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: const RawRecursiveSquaresGrid(),
+                        );
+                      },
+                    ),
                     WidgetbookUseCase(
                       name: 'Playground',
                       builder: (context) {
@@ -209,12 +220,12 @@ class WidgetbookApp extends StatelessWidget {
                             ),
                             minRepetition: context.knobs.double
                                 .slider(
-                              label: 'Minimum Repetition',
-                              initialValue: 10,
-                              min: 1,
-                              max: 20,
-                              divisions: 19,
-                            )
+                                  label: 'Minimum Repetition',
+                                  initialValue: 10,
+                                  min: 1,
+                                  max: 20,
+                                  divisions: 19,
+                                )
                                 .toInt(),
                             strokeWidth: context.knobs.double.slider(
                               label: 'Stroke Width',

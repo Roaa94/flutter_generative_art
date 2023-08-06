@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-class SquaresGrid extends StatelessWidget {
-  const SquaresGrid({
+class RawRecursiveSquaresGrid extends StatelessWidget {
+  const RawRecursiveSquaresGrid({
     super.key,
-    this.sideLength = 80,
-    this.strokeWidth = 2,
-    this.gap = 30,
+    this.side = 80,
+    this.strokeWidth = 1.5,
+    this.gap = 10,
+    this.minSquareSideFraction = 0.2,
   });
 
-  final double sideLength;
+  final double side;
   final double strokeWidth;
   final double gap;
+  final double minSquareSideFraction;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +20,8 @@ class SquaresGrid extends StatelessWidget {
       color: Colors.white,
       child: SizedBox.expand(
         child: CustomPaint(
-          painter: SquaresCustomPainter(
-            sideLength: sideLength,
+          painter: RecursiveSquaresCustomPainter(
+            sideLength: side,
             strokeWidth: strokeWidth,
             gap: gap,
           ),
@@ -29,21 +31,23 @@ class SquaresGrid extends StatelessWidget {
   }
 }
 
-class SquaresCustomPainter extends CustomPainter {
-  SquaresCustomPainter({
+class RecursiveSquaresCustomPainter extends CustomPainter {
+  RecursiveSquaresCustomPainter({
     this.sideLength = 80,
     this.strokeWidth = 2,
-    this.gap = 30,
-  });
+    this.gap = 10,
+    this.minSquareSideFraction = 0.2,
+  }) : minSideLength = sideLength * minSquareSideFraction;
 
   final double sideLength;
   final double strokeWidth;
   final double gap;
+  final double minSideLength;
+  final double minSquareSideFraction;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 
@@ -74,17 +78,47 @@ class SquaresCustomPainter extends CustomPainter {
       int i = index ~/ yCount;
       int j = index % yCount;
 
-      canvas.drawRect(
-        Rect.fromLTWH(
+      drawNestedSquares(
+        canvas,
+        Offset(
           (i * (sideLength + gap)),
           (j * (sideLength + gap)),
-          sideLength,
-          sideLength,
         ),
+        sideLength,
         paint,
       );
     }
     canvas.restore();
+  }
+
+  void drawNestedSquares(
+    Canvas canvas,
+    Offset start,
+    double sideLength,
+    Paint paint,
+  ) {
+    if (sideLength < minSideLength) return;
+
+    canvas.drawRect(
+      Rect.fromLTWH(
+        start.dx,
+        start.dy,
+        sideLength,
+        sideLength,
+      ),
+      paint,
+    );
+
+    // calculate the side length for the next square
+    final nextSideLength = sideLength * 0.8;
+
+    final nextStart = Offset(
+      start.dx + sideLength / 2 - nextSideLength / 2,
+      start.dy + sideLength / 2 - nextSideLength / 2,
+    );
+
+    // recursive call with the next side length and starting point
+    drawNestedSquares(canvas, nextStart, nextSideLength, paint);
   }
 
   @override
