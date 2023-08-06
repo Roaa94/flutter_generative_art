@@ -62,39 +62,42 @@ class _AnimatedDistortedPolygonsGridState
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: ColoredBox(
-        color: Colors.black,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final size = constraints.biggest;
-            final xCount = ((size.width + widget.gap) /
-                    (widget.maxSideLength + widget.gap))
-                .floor();
-            final yCount = ((size.height + widget.gap) /
-                    (widget.maxSideLength + widget.gap))
-                .floor();
+    return ColoredBox(
+      color: Colors.black,
+      child: SizedBox.expand(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final size = constraints.biggest;
+              final xCount = ((size.width + widget.gap) /
+                      (widget.maxSideLength + widget.gap))
+                  .floor();
+              final yCount = ((size.height + widget.gap) /
+                      (widget.maxSideLength + widget.gap))
+                  .floor();
 
-            return CustomPaint(
-              painter: PolygonsCustomPainter(
-                animationController: animationController,
-                maxSideLength: widget.maxSideLength,
-                maxCornersOffset: widget.maxCornersOffset,
-                random: random,
-                minRepetition: widget.minRepetition,
-                enableRepetition: widget.enableRepetition,
-                enableColors: widget.enableColors,
-                enableAnimation: widget.enableAnimation,
-                strokeWidth: widget.strokeWidth,
-                lightness: widget.lightness,
-                saturation: widget.saturation,
-                gap: widget.gap,
-                oneColorPerSet: widget.oneColorPerSet,
-                xCount: xCount,
-                yCount: yCount,
-              ),
-            );
-          },
+              return CustomPaint(
+                painter: PolygonsCustomPainter(
+                  animationController: animationController,
+                  maxSideLength: widget.maxSideLength,
+                  maxCornersOffset: widget.maxCornersOffset,
+                  random: random,
+                  minRepetition: widget.minRepetition,
+                  enableRepetition: widget.enableRepetition,
+                  enableColors: widget.enableColors,
+                  enableAnimation: widget.enableAnimation,
+                  strokeWidth: widget.strokeWidth,
+                  lightness: widget.lightness,
+                  saturation: widget.saturation,
+                  gap: widget.gap,
+                  oneColorPerSet: widget.oneColorPerSet,
+                  xCount: xCount,
+                  yCount: yCount,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

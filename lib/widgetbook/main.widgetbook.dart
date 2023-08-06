@@ -151,6 +151,45 @@ class WidgetbookApp extends StatelessWidget {
                   ],
                 ),
                 WidgetbookComponent(
+                  name: 'DistortedPolygonSet',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Playground',
+                      builder: (context) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: DistortedPolygonSet(
+                            minRepetition: context.knobs.double
+                                .slider(
+                                  label: 'Minimum Repetition',
+                                  initialValue: 30,
+                                  min: 1,
+                                  max: 50,
+                                  divisions: 49,
+                                )
+                                .toInt(),
+                            strokeWidth: context.knobs.double.slider(
+                              label: 'Stroke Width',
+                              initialValue: 1.0,
+                              min: 0.5,
+                              max: 3.5,
+                              divisions: 6,
+                            ),
+                            maxCornersOffset: context.knobs.double.slider(
+                              label: 'Max Corners Offset',
+                              initialValue: 20,
+                              min: 0,
+                              max: 100,
+                              divisions: 100,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
                   name: 'DistortedPolygonsGrid',
                   useCases: [
                     WidgetbookUseCase(
@@ -170,12 +209,12 @@ class WidgetbookApp extends StatelessWidget {
                             ),
                             minRepetition: context.knobs.double
                                 .slider(
-                                  label: 'Minimum Repetition',
-                                  initialValue: 10,
-                                  min: 1,
-                                  max: 20,
-                                  divisions: 19,
-                                )
+                              label: 'Minimum Repetition',
+                              initialValue: 10,
+                              min: 1,
+                              max: 20,
+                              divisions: 19,
+                            )
                                 .toInt(),
                             strokeWidth: context.knobs.double.slider(
                               label: 'Stroke Width',
@@ -216,45 +255,6 @@ class WidgetbookApp extends StatelessWidget {
                               max: 1.0,
                               divisions: 10,
                               initialValue: 0.5,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                WidgetbookComponent(
-                  name: 'DistortedPolygonSet',
-                  useCases: [
-                    WidgetbookUseCase(
-                      name: 'Playground',
-                      builder: (context) {
-                        return SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          child: DistortedPolygonSet(
-                            minRepetition: context.knobs.double
-                                .slider(
-                                  label: 'Minimum Repetition',
-                                  initialValue: 30,
-                                  min: 1,
-                                  max: 50,
-                                  divisions: 49,
-                                )
-                                .toInt(),
-                            strokeWidth: context.knobs.double.slider(
-                              label: 'Stroke Width',
-                              initialValue: 1.0,
-                              min: 0.5,
-                              max: 3.5,
-                              divisions: 6,
-                            ),
-                            maxCornersOffset: context.knobs.double.slider(
-                              label: 'Max Corners Offset',
-                              initialValue: 20,
-                              min: 0,
-                              max: 100,
-                              divisions: 100,
                             ),
                           ),
                         );

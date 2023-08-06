@@ -30,19 +30,22 @@ class DistortedPolygonsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Colors.white,
+      color: Colors.black,
       child: SizedBox.expand(
-        child: CustomPaint(
-          painter: RecursiveSquaresCustomPainter(
-            maxSideLength: maxSideLength,
-            strokeWidth: strokeWidth,
-            gap: gap,
-            maxCornersOffset: maxCornersOffset,
-            saturation: saturation,
-            lightness: lightness,
-            enableRepetition: enableRepetition,
-            enableColors: enableColors,
-            minRepetition: minRepetition,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: CustomPaint(
+            painter: RecursiveSquaresCustomPainter(
+              maxSideLength: maxSideLength,
+              strokeWidth: strokeWidth,
+              gap: gap,
+              maxCornersOffset: maxCornersOffset,
+              saturation: saturation,
+              lightness: lightness,
+              enableRepetition: enableRepetition,
+              enableColors: enableColors,
+              minRepetition: minRepetition,
+            ),
           ),
         ),
       ),
