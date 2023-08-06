@@ -2,113 +2,96 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_generative_art/models/polygon.dart';
 import 'package:flutter_generative_art/vera_molnar/utils.dart';
 
-class DistortedPolygonSet extends StatefulWidget {
+class DistortedPolygonSet extends StatelessWidget {
   const DistortedPolygonSet({
     super.key,
     this.maxCornersOffset = 20,
-    this.strokeWidth = 2,
-    this.enableRepetition = true,
-    this.enableColors = false,
     this.minRepetition = 20,
+    this.strokeWidth = 2,
     this.child,
-    this.minSquareSideFraction = 0.8,
   });
 
   final double maxCornersOffset;
   final double strokeWidth;
-  final double minSquareSideFraction;
-  final bool enableRepetition;
-  final bool enableColors;
   final int minRepetition;
   final Widget? child;
 
   @override
-  State<DistortedPolygonSet> createState() => _DistortedPolygonSetState();
-}
-
-class _DistortedPolygonSetState extends State<DistortedPolygonSet>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController animationController;
-  static final Random random = Random();
-  late final int repetition;
-
-  @override
-  void initState() {
-    super.initState();
-    repetition =
-        widget.enableRepetition ? random.nextInt(10) + widget.minRepetition : 1;
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2000),
-    );
-    animationController.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SizedBox.expand(
       child: ColoredBox(
-        color: Colors.black,
+        color: Colors.white,
         child: CustomPaint(
-          painter: DistortedPolygonSetCustomPainter(
-            polygons: generateDistortedPolygonsSet(
-              random,
-              enableColors: widget.enableColors,
-              maxSideLength: size.shortestSide * widget.minSquareSideFraction,
-              maxCornersOffset: widget.maxCornersOffset,
-              repetition: repetition,
-            ),
-            strokeWidth: widget.strokeWidth,
-            animationController: animationController,
+          painter: _DistortedPolygonSetCustomPainter(
+            maxCornersOffset: maxCornersOffset,
+            strokeWidth: strokeWidth,
+            minRepetition: minRepetition,
           ),
-          child: widget.child,
+          child: child,
         ),
       ),
     );
   }
 }
 
-class DistortedPolygonSetCustomPainter extends CustomPainter {
-  DistortedPolygonSetCustomPainter({
-    required this.polygons,
+class _DistortedPolygonSetCustomPainter extends CustomPainter {
+  _DistortedPolygonSetCustomPainter({
     this.strokeWidth = 2,
-    required AnimationController animationController,
-  }) : super(repaint: animationController) {
-    polygonAnimations = generatePolygonAnimations(polygons, animationController);
-  }
+    this.maxCornersOffset = 20,
+    this.minRepetition = 20,
+  });
 
-  late final List<Animation<double>> polygonAnimations;
-  final List<Polygon> polygons;
   final double strokeWidth;
+  final double maxCornersOffset;
+  final int minRepetition;
+
+  static final Random random = Random();
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
+      ..color = Colors.black
       ..strokeWidth = strokeWidth;
 
     final center = Offset(size.width / 2, size.height / 2);
 
-    for (int i = 0; i < polygons.length; i++) {
-      paint.color = polygons[i]
-          .color
-          .withOpacity(polygons[i].level * polygonAnimations[i].value);
+    final side = size.shortestSide * 0.7;
+
+    final repetition = random.nextInt(10) + minRepetition;
+
+    for (int i = 0; i < repetition; i++) {
+      Offset topLeft = Offset.zero;
+      Offset topRight = topLeft + Offset(side, 0);
+      Offset bottomRight = topLeft + Offset(side, side);
+      Offset bottomLeft = topLeft + Offset(0, side);
+
+      topLeft += randomOffsetFromRange(random, maxCornersOffset);
+      topRight += randomOffsetFromRange(random, maxCornersOffset);
+      bottomRight += randomOffsetFromRange(random, maxCornersOffset);
+      bottomLeft += randomOffsetFromRange(random, maxCornersOffset);
+
+      Offset polygonCenter = Offset(
+        (topLeft.dx + topRight.dx + bottomRight.dx + bottomLeft.dx) / 4,
+        (topLeft.dy + topRight.dy + bottomRight.dy + bottomLeft.dy) / 4,
+      );
+
       canvas.save();
       canvas.translate(
-          center.dx - polygons[i].center.dx, center.dy - polygons[i].center.dy);
+        center.dx - polygonCenter.dx,
+        center.dy - polygonCenter.dy,
+      );
       canvas.drawPoints(
         PointMode.polygon,
-        polygons[i].getLerpedPoints(1 - polygonAnimations[i].value),
+        [
+          topLeft,
+          topRight,
+          bottomRight,
+          bottomLeft,
+          topLeft,
+        ],
         paint,
       );
       canvas.restore();

@@ -79,6 +79,7 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
       int i = index ~/ yCount;
       int j = index % yCount;
 
+      // Recursively draw squares
       drawNestedSquares(
         canvas,
         Offset(
@@ -98,6 +99,8 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
     double sideLength,
     Paint paint,
   ) {
+    // Recursively draw squares until the side of the square
+    // reaches the minimum defined by the `minSideLength` input
     if (sideLength < minSideLength) return;
 
     canvas.drawRect(

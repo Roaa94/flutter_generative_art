@@ -2,8 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_generative_art/models/polygon.dart';
-import 'package:flutter_generative_art/vera_molnar/utils.dart';
 
 class DistortedPolygon extends StatelessWidget {
   const DistortedPolygon({
@@ -25,7 +23,7 @@ class DistortedPolygon extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: CustomPaint(
-        painter: DistortedPolygonCustomPainter(
+        painter: _DistortedPolygonCustomPainter(
           strokeWidth: strokeWidth,
           maxSideLength: maxSideLength,
           maxCornersOffset: maxCornersOffset,
@@ -37,8 +35,8 @@ class DistortedPolygon extends StatelessWidget {
   }
 }
 
-class DistortedPolygonCustomPainter extends CustomPainter {
-  DistortedPolygonCustomPainter({
+class _DistortedPolygonCustomPainter extends CustomPainter {
+  _DistortedPolygonCustomPainter({
     this.strokeWidth = 2,
     this.maxSideLength = 200,
     this.maxCornersOffset = 20,

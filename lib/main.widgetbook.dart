@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_generative_art/vera_molnar/animated_distorted_polygon_set.dart';
 import 'package:flutter_generative_art/vera_molnar/get_started_page.dart';
 import 'package:flutter_generative_art/styles/themes.dart';
 import 'package:flutter_generative_art/vera_molnar/animated_distorted_squares_grid.dart';
@@ -106,8 +107,9 @@ class WidgetbookApp extends StatelessWidget {
                             gap: context.knobs.double.slider(
                               label: 'Gap',
                               initialValue: 5,
-                              min: 5,
+                              min: 0,
                               max: 50,
+                              divisions: 50,
                             ),
                             strokeWidth: context.knobs.double.slider(
                               label: 'Stroke Width',
@@ -204,12 +206,46 @@ class WidgetbookApp extends StatelessWidget {
                   name: 'DistortedPolygonSet',
                   useCases: [
                     WidgetbookUseCase(
-                      name: 'Playground',
+                      name: 'Static',
                       builder: (context) {
                         return SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
                           child: DistortedPolygonSet(
+                            minRepetition: context.knobs.double
+                                .slider(
+                              label: 'Minimum Repetition',
+                              initialValue: 30,
+                              min: 1,
+                              max: 100,
+                              divisions: 99,
+                            )
+                                .toInt(),
+                            strokeWidth: context.knobs.double.slider(
+                              label: 'Stroke Width',
+                              initialValue: 1.5,
+                              min: 0.5,
+                              max: 3.5,
+                              divisions: 6,
+                            ),
+                            maxCornersOffset: context.knobs.double.slider(
+                              label: 'Max Corners Offset',
+                              initialValue: 50,
+                              min: 0,
+                              max: 100,
+                              divisions: 100,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    WidgetbookUseCase(
+                      name: 'Animated',
+                      builder: (context) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: AnimatedDistortedPolygonSet(
                             minRepetition: context.knobs.double
                                 .slider(
                                   label: 'Minimum Repetition',

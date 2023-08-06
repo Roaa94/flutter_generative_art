@@ -56,27 +56,39 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 
+    // Calculate the number of squares that can fit on the horizontal axis
     final xCount = ((size.width + gap) / (sideLength + gap)).floor();
+
+    // Calculate the number of squares that can fit on the vertical axis
     final yCount = ((size.height + gap) / (sideLength + gap)).floor();
+
+    // Calculate the size of the grid of squares
     final contentSize = Size(
       (xCount * sideLength) + ((xCount - 1) * gap),
       (yCount * sideLength) + ((yCount - 1) * gap),
     );
+
+    // Calculate the offset from which we should start painting
+    // the grid so that it is eventually centered
     final offset = Offset(
       (size.width - contentSize.width) / 2,
       (size.height - contentSize.height) / 2,
     );
 
     final totalCount = xCount * yCount;
+
     canvas.save();
     canvas.translate(offset.dx, offset.dy);
 
+    // Introduced a randomized `depth` value that will randomize
+    // the side length of the smallest square
     final depth = random.nextInt(5) + 5;
 
     for (int index = 0; index < totalCount; index++) {
       int i = index ~/ yCount;
       int j = index % yCount;
 
+      // Recursively draw squares
       drawNestedSquares(
         canvas,
         Offset(
@@ -98,6 +110,9 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
     Paint paint,
     int depth,
   ) {
+    // Recursively draw squares until the side of the square
+    // reaches the minimum defined by the `minSideLength` input
+    // Or until the `depth` reaches 0
     if (sideLength < minSideLength || depth <= 0) return;
 
     canvas.drawRect(
@@ -118,7 +133,7 @@ class _RecursiveSquaresCustomPainter extends CustomPainter {
       start.dy + sideLength / 2 - nextSideLength / 2,
     );
 
-    // recursive call with the next side length and starting point
+    // recursive call with the next side length, starting point & `depth`
     drawNestedSquares(canvas, nextStart, nextSideLength, paint, depth - 1);
   }
 

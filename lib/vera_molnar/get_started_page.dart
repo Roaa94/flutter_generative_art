@@ -9,9 +9,7 @@ class GetStartedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DistortedPolygonSet(
-        minSquareSideFraction: 0.9,
         minRepetition: 50,
-        enableColors: true,
         maxCornersOffset: 30,
         child: Center(
           child: DistortedPolygon(
