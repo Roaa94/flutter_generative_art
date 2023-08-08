@@ -1,16 +1,7 @@
-# flutter_generative_art
+# Generative Art in Flutter
 
-Generative Art Examples with Flutter
+Repo was used for a talk I gave at [FlutterCon Berlin](https://fluttercon.dev/) about creating high-level Flutter animations with low-level APIs, specifically Flutter's `CustomPainter` and the Canvas API.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* 📃 [Full article version of the talk](https://medium.com/flutter-community/9e53701f7805)
+* 🎥 [FlutterCon talk video](https://www.droidcon.com/2023/08/07/high-level-flutter-animations-with-low-level-apis/)
+* 🌍 [Live demo of the artworks in a Widgetbook](https://generative-art.roaakdm.com/#/?path=vera-molnar%2Fwidgets%2Fanimatedpolygonsgrid%2Fplayground)
