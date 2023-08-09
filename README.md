@@ -8,5 +8,7 @@ Repo was used for a talk I gave at [FlutterCon Berlin](https://fluttercon.dev/) 
 
 **From the demo**
 
-https://github.com/Roaa94/flutter_generative_art/assets/50345358/cacefc67-ace3-4a19-b87d-1d99c8716a57
+https://github.com/Roaa94/flutter_generative_art/assets/50345358/2771edfd-6047-4fa2-a518-5e2aba11dcbd
+
+
 
